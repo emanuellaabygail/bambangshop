@@ -65,11 +65,11 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement unsubscribe function in Notification controller.`
     -   [x] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
 -   **STAGE 3: Implement notification mechanism**
-    -   [ ] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
-    -   [ ] Commit: `Implement notify function in Notification service to notify each Subscriber.`
-    -   [ ] Commit: `Implement publish function in Program service and Program controller.`
-    -   [ ] Commit: `Edit Product service methods to call notify after create/delete.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-3" questions in this README.
+    -   [x] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
+    -   [x] Commit: `Implement notify function in Notification service to notify each Subscriber.`
+    -   [x] Commit: `Implement publish function in Program service and Program controller.`
+    -   [x] Commit: `Edit Product service methods to call notify after create/delete.`
+    -   [x] Write answers of your learning module's "Reflection Publisher-3" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -103,3 +103,14 @@ Jika hanya menggunakan Model tanpa memisahkan Service dan Repository, semua logi
 Ya, saya sudah mengeksplorasi Postman dan merasa alat ini sangat membantu dalam menguji API. Saya bisa melakukan request HTTP dengan mudah, mengelola collection untuk pengujian terstruktur, serta menggunakan Environment untuk menyimpan variabel seperti URL dan token. Fitur Automated Testing dan Mock Server juga sangat berguna untuk menguji respons API dan membuat API tiruan tanpa server asli, sehingga cocok untuk proyek kelompok dan pengembangan perangkat lunak di masa depan.
 
 #### Reflection Publisher-3
+>Observer Pattern has two variations: Push model (publisher pushes data to subscribers) and Pull model (subscribers pull data from publisher). In this tutorial case, which variation of Observer Pattern that we use?
+
+Variasi Observer Pattern yang digunakan pada tutorial ini adalah Push Model karena Publisher mengirim notifikasi kepada semua Subscriber-Nya saat terjadi CRUD pada product dengan method notify pada NotificationService
+
+>What are the advantages and disadvantages of using the other variation of Observer Pattern for this tutorial case? (example: if you answer Q1 with Push, then imagine if we used Pull)
+
+Variasi pull pada Observer Pattern memiliki keuntungan dalam fleksibilitas data, karena observer dapat mengambil informasi yang diperlukan dari subject secara langsung, sehingga data yang tidak dibutuhkan tidak terkirim. Hal ini juga membuat penggunaan data lebih efisien jika hanya sebagian data yang berubah. Namun, ada kekurangannya, yaitu beban pemrosesan berpindah ke observer, karena observer harus tahu bagaimana mengambil data yang diperlukan dari subject, yang meningkatkan keterkaitan (coupling). Selain itu, ada risiko overhead komunikasi jika observer mengambil lebih banyak data dari yang sebenarnya diperlukan. Pada kasus tutorial ini, jika perubahan data tidak selalu relevan bagi semua observer, variasi pull bisa menjadi lebih rumit dan kurang efisien dibandingkan variasi push.
+
+>Explain what will happen to the program if we decide to not use multi-threading in the notification process.
+
+Jika kita tidak menggunakan multi-threading dalam proses notifikasi, seluruh pengiriman notifikasi akan dilakukan secara berurutan pada main thread. Hal ini berarti jika ada banyak subscriber, program akan mengirim notifikasi satu per satu, sehingga proses menjadi lambat dan dapat menyebabkan blocking pada operasi lain. Akibatnya, responsivitas aplikasi menurun, terutama jika pengiriman notifikasi memerlukan waktu lama (misalnya, karena koneksi jaringan). Oleh karena itu, tanpa multi-threading, efisiensi dan performa program akan sangat terganggu, terutama pada skala besar dengan banyak subscriber.
